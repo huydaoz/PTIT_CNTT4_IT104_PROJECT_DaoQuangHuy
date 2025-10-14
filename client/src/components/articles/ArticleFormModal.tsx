@@ -88,21 +88,23 @@ export default function ArticleFormModal({
     try {
       const values = await form.validateFields();
 
-      const existing = await axios.get("http://localhost:8080/articles");
-      const isDuplicate = existing.data.some((item: Article) => {
-        const sameTitle =
-          item.title.trim().toLowerCase() === values.title.trim().toLowerCase();
-        return editMode ? sameTitle && item.id !== values.id : sameTitle;
-      });
+      if (!editMode) {
+        const existing = await axios.get("http://localhost:8080/articles");
+        const isDuplicate = existing.data.some(
+          (item: Article) =>
+            item.title.trim().toLowerCase() ===
+            values.title.trim().toLowerCase()
+        );
 
-      if (isDuplicate) {
-        Swal.fire({
-          title: "Tiêu đề đã tồn tại!",
-          text: "Vui lòng nhập tiêu đề khác.",
-          icon: "error",
-          confirmButtonText: "Đóng",
-        });
-        return;
+        if (isDuplicate) {
+          Swal.fire({
+            title: "Tiêu đề đã tồn tại!",
+            text: "Vui lòng nhập tiêu đề khác.",
+            icon: "error",
+            confirmButtonText: "Đóng",
+          });
+          return;
+        }
       }
 
       // Lấy userId từ localStorage
@@ -196,7 +198,6 @@ export default function ArticleFormModal({
           </Radio.Group>
         </Form.Item>
 
-        {/* Upload Image */}
         <Form.Item label="Upload Image:">
           <Upload
             beforeUpload={handleUploadImage}

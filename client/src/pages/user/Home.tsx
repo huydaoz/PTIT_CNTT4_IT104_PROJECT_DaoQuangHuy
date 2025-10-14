@@ -15,6 +15,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import AppHeader from "../../layouts/Header/Header";
 import AppFooter from "../../layouts/Footer/Footer";
+import { BiArrowBack } from "react-icons/bi";
+import { GrLinkNext } from "react-icons/gr";
 
 const { Title, Text } = Typography;
 const { TabPane } = Tabs;
@@ -302,7 +304,7 @@ export default function Home() {
                     disabled={currentPage === 1}
                     onClick={() => setCurrentPage((p) => p - 1)}
                   >
-                    Previous
+                    <BiArrowBack /> Previous
                   </Button>
 
                   <Pagination
@@ -316,7 +318,7 @@ export default function Home() {
                     disabled={currentPage * pageSize >= filteredArticles.length}
                     onClick={() => setCurrentPage((p) => p + 1)}
                   >
-                    Next
+                    Next <GrLinkNext />
                   </Button>
                 </div>
               )}

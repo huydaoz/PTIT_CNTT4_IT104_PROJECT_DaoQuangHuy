@@ -14,6 +14,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const { Header } = Layout;
 const { Search } = Input;
@@ -31,23 +32,45 @@ export default function AppHeader() {
   const [searchVisible, setSearchVisible] = useState(false);
 
   useEffect(() => {
+    // Lấy user từ localStorage
     const storedUser = localStorage.getItem("user");
     if (storedUser) setUser(JSON.parse(storedUser));
 
+    // Lấy danh sách bài viết để tìm kiếm
     axios.get("http://localhost:8080/articles").then((res) => {
       setArticles(res.data);
     });
   }, []);
 
+  // Đăng xuất
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
-    navigate("/login");
+    Swal.fire({
+      title: "Xác nhận đăng xuất?",
+      text: "Bạn có chắc chắn muốn đăng xuất không?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Đăng xuất",
+      cancelButtonText: "Hủy",
+      confirmButtonColor: "#d33",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("user");
+        setUser(null);
+        Swal.fire({
+          icon: "success",
+          title: "Đăng xuất thành công!",
+          showConfirmButton: false,
+          timer: 1200,
+        });
+        navigate("/login");
+      }
+    });
   };
 
-  // Khi người dùng nhập từ khóa
+  // Khi người dùng nhập từ khóa tìm kiếm
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const keyword = e.target.value.toLowerCase();
+
     if (keyword.trim() === "") {
       setSearchResults([]);
       setSearchVisible(false);
@@ -64,12 +87,13 @@ export default function AppHeader() {
     setSearchVisible(true);
   };
 
-  // Khi click vào bài viết
+  // Khi click vào một bài viết
   const handleSelectArticle = (id: number) => {
     setSearchVisible(false);
     navigate(`/post-detail/${id}`);
   };
 
+  // Menu dropdown user
   const menuItems: MenuProps["items"] = [
     {
       key: "info",
@@ -100,7 +124,10 @@ export default function AppHeader() {
     {
       key: "logout",
       label: (
-        <Text style={{ cursor: "pointer" }} onClick={handleLogout}>
+        <Text
+          style={{ cursor: "pointer", color: "red" }}
+          onClick={handleLogout}
+        >
           Log out
         </Text>
       ),
@@ -154,7 +181,7 @@ export default function AppHeader() {
           }}
         />
 
-        {/* Hiển thị gợi ý tìm kiếm */}
+        {/* Hiển thị kết quả tìm kiếm */}
         {searchVisible && searchResults.length > 0 && (
           <Card
             style={{
@@ -179,7 +206,12 @@ export default function AppHeader() {
                       <img
                         src={item.image}
                         alt={item.title}
-                        style={{ width: 50, height: 50, objectFit: "cover" }}
+                        style={{
+                          width: 50,
+                          height: 50,
+                          objectFit: "cover",
+                          borderRadius: 4,
+                        }}
                       />
                     }
                     title={<Text strong>{item.title}</Text>}
@@ -188,7 +220,7 @@ export default function AppHeader() {
                         type="secondary"
                         ellipsis={{ tooltip: item.content }}
                       >
-                        {item.content.slice(0, 60)}...
+                        {item.content.slice(0, 100)}...
                       </Text>
                     }
                   />

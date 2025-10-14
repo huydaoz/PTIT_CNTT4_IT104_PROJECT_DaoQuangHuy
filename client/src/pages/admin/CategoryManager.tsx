@@ -7,6 +7,8 @@ import Swal from "sweetalert2";
 import "antd/dist/reset.css";
 import HeaderAdmin from "../../components/layout/HeaderAdmin";
 import SidebarAdmin from "../../components/layout/SidebarAdmin";
+import { GrLinkNext } from "react-icons/gr";
+import { BiArrowBack } from "react-icons/bi";
 
 const { Content } = Layout;
 
@@ -44,6 +46,7 @@ export default function CategoryManager() {
 
     try {
       const res = await axios.post(API_URL, { name: entryName });
+      //dngvt
       setEntries([...entries, res.data]);
       setEntryName("");
 
@@ -252,7 +255,7 @@ export default function CategoryManager() {
               }}
             >
               <Button onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}>
-                Previous
+                <BiArrowBack /> Previous
               </Button>
               <Pagination
                 current={currentPage}
@@ -267,7 +270,7 @@ export default function CategoryManager() {
                   )
                 }
               >
-                Next
+                Next <GrLinkNext />
               </Button>
             </div>
           </div>

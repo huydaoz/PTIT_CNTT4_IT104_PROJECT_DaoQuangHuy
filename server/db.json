@@ -63,6 +63,15 @@
       "email": "quochung@gmail.com",
       "password": "hung123",
       "status": "Hoạt động"
+    },
+    {
+      "firstname": "huy",
+      "lastname": "huy",
+      "email": "123@gmail.com",
+      "password": "123456",
+      "status": "Hoạt động",
+      "role": "user",
+      "id": 7
     }
   ],
   "entries": [
@@ -161,8 +170,8 @@
       "content": "Cách hiểu rõ hơn về hành vi khách hàng để tối ưu chiến lược quảng cáo và nâng cao tỷ lệ chuyển đổi.",
       "status": "Public",
       "image": "https://res.cloudinary.com/dtv22zbpt/image/upload/v1760335762/ps4lsrsbi8xyxfnapjmv.jpg",
-      "date": "2025-10-13",
-      "userId": 3,
+      "date": "2025-10-14",
+      "userId": 1,
       "id": 7
     },
     {
@@ -197,16 +206,6 @@
       "date": "2025-10-13",
       "userId": 6,
       "id": 10
-    },
-    {
-      "title": "1",
-      "entryId": 2,
-      "mood": "Vui vẻ",
-      "content": "1",
-      "status": "Public",
-      "date": "2025-10-14",
-      "userId": 1,
-      "id": 11
     }
   ]
 }

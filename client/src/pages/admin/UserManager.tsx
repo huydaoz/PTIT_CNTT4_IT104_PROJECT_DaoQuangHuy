@@ -18,6 +18,8 @@ import {
 import { UserOutlined, SearchOutlined } from "@ant-design/icons";
 import "antd/dist/reset.css";
 import SidebarAdmin from "../../components/layout/SidebarAdmin";
+import { GrLinkNext } from "react-icons/gr";
+import { BiArrowBack } from "react-icons/bi";
 
 const { Content } = Layout;
 
@@ -43,7 +45,7 @@ export default function UserManager() {
         setLoading(true);
         const res = await axios.get("http://localhost:8080/users");
 
-        const usersWithName = res.data.map((u: any) => ({
+        const usersWithName = [...res.data].map((u: any) => ({
           ...u,
           name: `${u.firstname} ${u.lastname}`,
           username: `@${u.lastname.toLowerCase()}`,
@@ -59,6 +61,26 @@ export default function UserManager() {
     fetchData();
   }, []);
 
+  // Hàm cập nhật trạng thái
+  const handleChangeStatus = async (id: number, newStatus: string) => {
+    try {
+      setLoading(true);
+      await axios.patch(`http://localhost:8080/users/${id}`, {
+        status: newStatus,
+      });
+
+      setUsers((prev) =>
+        prev.map((u) => (u.id === id ? { ...u, status: newStatus } : u))
+      );
+
+      message.success(newStatus === "Đã chặn" ? "Đã chặn!" : "Đã chặn!");
+    } catch (error: any) {
+      message.error("Cập nhật trạng thái thất bại!", error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Lọc dữ liệu
   const filteredData = useMemo(() => {
     const t = searchText.trim().toLowerCase();
@@ -68,13 +90,13 @@ export default function UserManager() {
     );
   }, [searchText, users]);
 
-  //Phân trang
+  // Phân trang
   const pageData = useMemo(() => {
     const start = (currentPage - 1) * pageSize;
     return filteredData.slice(start, start + pageSize);
   }, [filteredData, currentPage]);
 
-  //Cấu hình cột bảng
+  // Cấu hình cột
   const columns: any = [
     {
       title: "Name",
@@ -99,6 +121,16 @@ export default function UserManager() {
       key: "status",
       width: 150,
       sorter: (a: User, b: User) => a.status.localeCompare(b.status),
+      render: (status: string) => (
+        <span
+          style={{
+            color: status === "Đã chặn" ? "#d32f2f" : "#2e7d32",
+            fontWeight: 500,
+          }}
+        >
+          {status}
+        </span>
+      ),
     },
     {
       title: "Email address",
@@ -111,7 +143,7 @@ export default function UserManager() {
       key: "action",
       width: 160,
       align: "center",
-      render: () => (
+      render: (_: any, record: User) => (
         <Space>
           <Button
             size="small"
@@ -121,9 +153,13 @@ export default function UserManager() {
               border: "none",
               borderRadius: "999px",
               fontWeight: 500,
+              opacity: record.status === "Đã chặn" ? 0.5 : 1,
+              cursor: record.status === "Đã chặn" ? "not-allowed" : "pointer",
             }}
+            disabled={record.status === "Đã chặn"}
+            onClick={() => handleChangeStatus(record.id, "Đã chặn")}
           >
-            block
+            Block
           </Button>
 
           <Button
@@ -134,9 +170,13 @@ export default function UserManager() {
               border: "none",
               borderRadius: "999px",
               fontWeight: 500,
+              opacity: record.status === "Hoạt động" ? 0.5 : 1,
+              cursor: record.status === "Hoạt động" ? "not-allowed" : "pointer",
             }}
+            disabled={record.status === "Hoạt động"}
+            onClick={() => handleChangeStatus(record.id, "Hoạt động")}
           >
-            unblock
+            Unblock
           </Button>
         </Space>
       ),
@@ -145,14 +185,11 @@ export default function UserManager() {
 
   return (
     <Layout style={{ minHeight: "100vh", background: "#f6f7fb" }}>
-      {/* HEADER */}
       <HeaderAdmin />
 
       <Layout>
-        {/* SIDEBAR */}
         <SidebarAdmin />
 
-        {/* CONTENT */}
         <Content style={{ paddingLeft: 24 }}>
           <div style={{ maxWidth: 1000 }}>
             <Card style={{ background: "transparent" }}>
@@ -230,7 +267,7 @@ export default function UserManager() {
               }}
             >
               <Button onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}>
-                Previous
+                <BiArrowBack /> Previous
               </Button>
               <Pagination
                 current={currentPage}
@@ -245,7 +282,7 @@ export default function UserManager() {
                   )
                 }
               >
-                Next
+                Next <GrLinkNext />
               </Button>
             </div>
           </div>

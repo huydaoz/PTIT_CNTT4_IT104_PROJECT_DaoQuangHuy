@@ -32,6 +32,14 @@ const siderItems = [
 export default function SidebarAdmin() {
   const navigate = useNavigate();
 
+  const handleClick = (item: any) => {
+    if (item.key === "logout") {
+      localStorage.removeItem("admin");
+    }
+
+    navigate(item.path);
+  };
+
   return (
     <Sider
       width={220}
@@ -42,7 +50,7 @@ export default function SidebarAdmin() {
           <Button
             key={it.key}
             block
-            onClick={() => navigate(it.path)}
+            onClick={() => handleClick(it)}
             style={{
               display: "flex",
               alignItems: "center",

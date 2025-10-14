@@ -1,7 +1,7 @@
 import { Form, Input, Button, Typography, message } from "antd";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../../services/authService";
+// import { loginUser } from "../../services/authService";
 import Swal from "sweetalert2";
 import { FaFacebookF, FaGoogle, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 
@@ -10,32 +10,63 @@ const { Text, Link } = Typography;
 export default function Login() {
   const navigate = useNavigate();
 
-  const ADMIN = {
-    email: "admin@gmail.com",
-    password: "1",
-  };
-
   const onFinish = async (values: any) => {
     const { email, password } = values;
 
     try {
-      if (email === ADMIN.email && password === ADMIN.password) {
+      // 🔹 1. Lấy danh sách admin từ db.json
+      const resAdmin = await fetch("http://localhost:8080/admin");
+      const adminList = await resAdmin.json();
+
+      // 🔹 2. Kiểm tra đăng nhập admin
+      const adminUser = adminList.find(
+        (a: any) => a.email === email && a.password === password
+      );
+
+      if (adminUser) {
         Swal.fire({
           icon: "success",
           title: "Đăng nhập admin thành công!",
           showConfirmButton: false,
           timer: 1500,
         });
-        localStorage.setItem(
-          "admin",
-          JSON.stringify({ ...ADMIN, role: "admin" })
-        );
+
+        localStorage.setItem("admin", JSON.stringify(adminUser));
         navigate("/user-manager");
         return;
       }
 
-      const user = await loginUser(email, password);
+      // 🔹 3. Nếu không phải admin → kiểm tra user
+      const resUser = await fetch("http://localhost:8080/users");
+      const userList = await resUser.json();
 
+      const foundUser = userList.find(
+        (u: any) => u.email === email && u.password === password
+      );
+
+      if (!foundUser) {
+        Swal.fire({
+          icon: "error",
+          title: "Đăng nhập thất bại!",
+          text: "Email hoặc mật khẩu không đúng",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
+
+      // 🔹 4. Kiểm tra trạng thái tài khoản
+      if (foundUser.status === "Đã chặn") {
+        Swal.fire({
+          icon: "error",
+          title: "Tài khoản đã bị chặn!",
+          text: "Vui lòng liên hệ quản trị viên để được hỗ trợ.",
+          showConfirmButton: true,
+        });
+        return;
+      }
+
+      // 🔹 5. Nếu tài khoản hoạt động → cho đăng nhập
       Swal.fire({
         icon: "success",
         title: "Đăng nhập thành công!",
@@ -43,17 +74,17 @@ export default function Login() {
         timer: 1500,
       });
 
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("user", JSON.stringify(foundUser));
       navigate("/");
     } catch (error: any) {
       Swal.fire({
         icon: "error",
         title: "Đăng nhập thất bại!",
-        text: "Email hoặc mật khẩu không đúng",
+        text: "Có lỗi xảy ra khi kết nối máy chủ.",
         showConfirmButton: false,
         timer: 1300,
       });
-      message.error("Email hoặc mật khẩu không đúng", error);
+      message.error("Không thể kết nối tới server", error);
     }
   };
 
@@ -99,12 +130,7 @@ export default function Login() {
                   { type: "email", message: "Email phải đúng định dạng" },
                 ]}
                 extra={
-                  <span
-                    style={{
-                      color: "#000",
-                      fontSize: "14px",
-                    }}
-                  >
+                  <span style={{ color: "#000", fontSize: "14px" }}>
                     Email Address
                   </span>
                 }
@@ -118,12 +144,7 @@ export default function Login() {
                   { required: true, message: "Mật khẩu không được để trống" },
                 ]}
                 extra={
-                  <span
-                    style={{
-                      color: "#000",
-                      fontSize: "14px",
-                    }}
-                  >
+                  <span style={{ color: "#000", fontSize: "14px" }}>
                     Password
                   </span>
                 }

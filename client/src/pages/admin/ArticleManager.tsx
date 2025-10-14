@@ -15,6 +15,8 @@ import "antd/dist/reset.css";
 import HeaderAdmin from "../../components/layout/HeaderAdmin";
 import SidebarAdmin from "../../components/layout/SidebarAdmin";
 import ArticleFormModal from "../../components/articles/ArticleFormModal";
+import { GrLinkNext } from "react-icons/gr";
+import { BiArrowBack } from "react-icons/bi";
 
 const { Content } = Layout;
 
@@ -43,18 +45,31 @@ export default function ArticleManager() {
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const pageSize = 3;
 
-  // Lấy dữ liệu
+  // Lấy dữ liệu ban đầu
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
-    const [articleRes, entryRes] = await Promise.all([
-      axios.get("http://localhost:8080/articles"),
-      axios.get("http://localhost:8080/entries"),
-    ]);
-    setArticles(articleRes.data);
-    setEntries(entryRes.data);
+    try {
+      const [articleRes, entryRes] = await Promise.all([
+        axios.get("http://localhost:8080/articles"),
+        axios.get("http://localhost:8080/entries"),
+      ]);
+      //dng.
+      const newArticles = articleRes.data;
+      setArticles(newArticles);
+      setEntries(entryRes.data);
+
+      const totalPages = Math.ceil(newArticles.length / pageSize);
+      if (currentPage > totalPages && totalPages > 0) {
+        setCurrentPage(totalPages);
+      } else if (totalPages === 0) {
+        setCurrentPage(1);
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
   };
 
   // Xoá bài viết
@@ -75,7 +90,7 @@ export default function ArticleManager() {
     }
   };
 
-  // Đổi trạng thái
+  // Đổi trạng thái bài viết
   const handleStatusChange = async (value: string, record: Article) => {
     await axios.patch(`http://localhost:8080/articles/${record.id}`, {
       status: value,
@@ -190,6 +205,7 @@ export default function ArticleManager() {
       <Layout>
         <SidebarAdmin />
         <Content style={{ padding: 24 }}>
+          {/* Header */}
           <div
             style={{
               display: "flex",
@@ -224,6 +240,7 @@ export default function ArticleManager() {
             </h2>
           </div>
 
+          {/* Table */}
           <div style={{ maxWidth: 1000 }}>
             <Card style={{ borderRadius: 12, padding: 24, background: "#fff" }}>
               <Table
@@ -235,6 +252,7 @@ export default function ArticleManager() {
               />
             </Card>
 
+            {/* Phân trang */}
             <div
               style={{
                 padding: 16,
@@ -247,19 +265,21 @@ export default function ArticleManager() {
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage((p) => p - 1)}
               >
-                Previous
+                <BiArrowBack /> Previous
               </Button>
+
               <Pagination
                 current={currentPage}
                 total={articles.length}
                 pageSize={pageSize}
                 onChange={(page) => setCurrentPage(page)}
               />
+
               <Button
                 disabled={currentPage * pageSize >= articles.length}
                 onClick={() => setCurrentPage((p) => p + 1)}
               >
-                Next
+                Next <GrLinkNext />
               </Button>
             </div>
           </div>

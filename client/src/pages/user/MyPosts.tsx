@@ -14,6 +14,8 @@ import AppHeader from "../../layouts/Header/Header";
 import AppFooter from "../../layouts/Footer/Footer";
 import axios from "axios";
 import ArticleFormModal from "../../components/articles/ArticleFormModal";
+import { BiArrowBack } from "react-icons/bi";
+import { GrLinkNext } from "react-icons/gr";
 
 const { Title, Text } = Typography;
 
@@ -211,7 +213,7 @@ export default function MyPosts() {
               disabled={currentPage === 1}
               onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
             >
-              Previous
+              <BiArrowBack /> Previous
             </Button>
 
             <Pagination
@@ -229,7 +231,7 @@ export default function MyPosts() {
                 )
               }
             >
-              Next
+              Next <GrLinkNext />
             </Button>
           </div>
         )}
