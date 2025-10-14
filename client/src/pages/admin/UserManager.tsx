@@ -72,8 +72,6 @@ export default function UserManager() {
       setUsers((prev) =>
         prev.map((u) => (u.id === id ? { ...u, status: newStatus } : u))
       );
-
-      message.success(newStatus === "Đã chặn" ? "Đã chặn!" : "Đã chặn!");
     } catch (error: any) {
       message.error("Cập nhật trạng thái thất bại!", error.message);
     } finally {

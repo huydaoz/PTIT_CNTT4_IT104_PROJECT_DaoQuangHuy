@@ -14,11 +14,9 @@ export default function Login() {
     const { email, password } = values;
 
     try {
-      // 🔹 1. Lấy danh sách admin từ db.json
       const resAdmin = await fetch("http://localhost:8080/admin");
       const adminList = await resAdmin.json();
 
-      // 🔹 2. Kiểm tra đăng nhập admin
       const adminUser = adminList.find(
         (a: any) => a.email === email && a.password === password
       );
@@ -36,7 +34,6 @@ export default function Login() {
         return;
       }
 
-      // 🔹 3. Nếu không phải admin → kiểm tra user
       const resUser = await fetch("http://localhost:8080/users");
       const userList = await resUser.json();
 
@@ -55,7 +52,6 @@ export default function Login() {
         return;
       }
 
-      // 🔹 4. Kiểm tra trạng thái tài khoản
       if (foundUser.status === "Đã chặn") {
         Swal.fire({
           icon: "error",
@@ -66,7 +62,6 @@ export default function Login() {
         return;
       }
 
-      // 🔹 5. Nếu tài khoản hoạt động → cho đăng nhập
       Swal.fire({
         icon: "success",
         title: "Đăng nhập thành công!",

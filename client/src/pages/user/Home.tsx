@@ -40,7 +40,6 @@ interface Entry {
 export default function Home() {
   const navigate = useNavigate();
 
-  // State
   const [activeKey, setActiveKey] = useState<string>("1");
   const [articles, setArticles] = useState<Article[]>([]);
   const [entries, setEntries] = useState<Entry[]>([]);

@@ -61,7 +61,6 @@ export default function MyPosts() {
         axios.get("http://localhost:8080/entries"),
       ]);
 
-      // Lọc bài viết của user hiện tại
       const userArticles = articlesRes.data.filter(
         (a: Article) => a.userId === currentUser.id
       );

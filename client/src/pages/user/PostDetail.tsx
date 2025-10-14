@@ -1,19 +1,8 @@
 import { useState, useEffect } from "react";
-import {
-  Avatar,
-  Card,
-  List,
-  Typography,
-  Input,
-  Button,
-  Space,
-  Modal,
-  Spin,
-} from "antd";
+import { Avatar, Card, List, Typography, Space, Button, Spin } from "antd";
 import {
   LikeOutlined,
   MessageOutlined,
-  SendOutlined,
   ArrowLeftOutlined,
   DownOutlined,
 } from "@ant-design/icons";
@@ -21,33 +10,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./PostDetail.css";
 
 const { Title, Text } = Typography;
-const { TextArea } = Input;
-
-const initialComments = Array.from({ length: 12 }).map((_, i) => ({
-  id: i + 1,
-  author: `User ${i + 1}`,
-  avatar: `https://i.pravatar.cc/40?img=${(i % 70) + 1}`,
-  content:
-    i === 0
-      ? "very good!"
-      : i === 1
-      ? "hello rikkei!"
-      : "Great post — thanks for sharing. I enjoyed reading your thoughts!",
-  datetime: `${i + 1}h`,
-  likes: Math.floor(Math.random() * 30),
-  replies: Math.floor(Math.random() * 10),
-}));
 
 export default function PostDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [comments, setComments] = useState(initialComments);
-  const [newComment, setNewComment] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [article, setArticle] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  // Lấy dữ liệu
   useEffect(() => {
     const fetchArticle = async () => {
       try {
@@ -66,21 +35,6 @@ export default function PostDetail() {
 
   const handleBack = () => navigate(-1);
 
-  const handleAddComment = () => {
-    if (!newComment.trim()) return;
-    const newItem = {
-      id: comments.length + 1,
-      author: "Bạn",
-      avatar: "https://i.pravatar.cc/40?img=65",
-      content: newComment,
-      datetime: "Vừa xong",
-      likes: 0,
-      replies: 0,
-    };
-    setComments([newItem, ...comments]);
-    setNewComment("");
-  };
-
   if (loading)
     return (
       <div style={{ textAlign: "center", marginTop: 50 }}>
@@ -95,9 +49,27 @@ export default function PostDetail() {
       </div>
     );
 
+  const staticComments = [
+    {
+      id: 1,
+      avatar:
+        "https://nhadepqueta.com/wp-content/uploads/2025/08/avatar-fb-mac-dinh.jpg",
+      content: "Very good!",
+      likes: "15 Like",
+      replies: "6 Replies",
+    },
+    {
+      id: 2,
+      avatar:
+        "https://nhadepqueta.com/wp-content/uploads/2025/08/avatar-fb-mac-dinh.jpg",
+      content: "hello rikkei!",
+      likes: "15 Like",
+      replies: "6 Replies",
+    },
+  ];
+
   return (
     <div className="post-detail">
-      {/* Back button */}
       <div className="post-back">
         <Button
           type="text"
@@ -107,18 +79,12 @@ export default function PostDetail() {
         />
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          gap: 5,
-        }}
-      >
+      <div className="post-main">
         <List.Item.Meta
           avatar={
             <Avatar src="https://nhadepqueta.com/wp-content/uploads/2025/08/avatar-fb-mac-dinh.jpg" />
           }
         />
-        {/* Main post */}
         <Card bordered={false} className="post-card">
           <div className="post-title-box">
             <Title level={4} className="post-title">
@@ -130,98 +96,61 @@ export default function PostDetail() {
             <Text>{article.content}</Text>
           </div>
 
-          {/* actions */}
           <div className="post-actions">
             <Space>
               <span className="action-item">
-                <LikeOutlined /> <span style={{ marginLeft: 6 }}>15 Like</span>
+                <span style={{ marginLeft: 6 }}>15 Like</span> <LikeOutlined />
               </span>
               <span className="action-item">
-                <MessageOutlined />{" "}
-                <span style={{ marginLeft: 6 }}>{comments.length} Replies</span>
+                <span style={{ marginLeft: 6 }}>6 Replies</span>{" "}
+                <MessageOutlined />
               </span>
             </Space>
           </div>
         </Card>
       </div>
 
-      {/* View all comments link */}
-      <div
-        className="view-all"
-        role="button"
-        tabIndex={0}
-        onClick={() => setIsModalOpen(true)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") setIsModalOpen(true);
-        }}
-        style={{ marginLeft: 35 }}
-      >
-        <Text style={{ color: "#1890ff", fontWeight: 600 }}>
-          View all {comments.length} comments
+      <div className="view-all" style={{ marginLeft: 35 }}>
+        <Text style={{ color: "#047857", fontWeight: 600 }}>
+          View all 12 comments
         </Text>
-        <DownOutlined style={{ marginLeft: 8, color: "#1890ff" }} />
+        <DownOutlined style={{ marginLeft: 8, color: "#047857" }} />
       </div>
 
-      {/* Few inline comments */}
       <div className="comments-inline" style={{ marginLeft: 35 }}>
         <List
           itemLayout="horizontal"
-          dataSource={comments.slice(0, 2)}
+          dataSource={staticComments}
           renderItem={(item) => (
             <List.Item className="comment-list-item">
               <List.Item.Meta
                 avatar={<Avatar src={item.avatar} />}
                 description={
-                  <div className="comment-bubble">{item.content}</div>
+                  <div className="comment-bubble">
+                    <div>{item.content}</div>
+                    <div
+                      style={{
+                        marginTop: 7,
+                        color: "#888",
+                        fontSize: 13,
+                        display: "flex",
+                        gap: 15,
+                      }}
+                    >
+                      <span>
+                        {item.likes} <LikeOutlined />
+                      </span>
+                      <span>
+                        {item.replies} <MessageOutlined />
+                      </span>
+                    </div>
+                  </div>
                 }
               />
             </List.Item>
           )}
         />
       </div>
-
-      {/* Add comment input */}
-      <div className="add-comment-box">
-        <Avatar src="https://i.pravatar.cc/40?img=65" />
-        <TextArea
-          placeholder="Viết bình luận..."
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-          onPressEnter={handleAddComment}
-          autoSize={{ minRows: 1, maxRows: 4 }}
-          style={{ marginLeft: 12 }}
-        />
-        <Button
-          type="primary"
-          icon={<SendOutlined />}
-          onClick={handleAddComment}
-          style={{ marginLeft: 12 }}
-        />
-      </div>
-
-      {/* Modal: all comments */}
-      <Modal
-        title={`All ${comments.length} comments`}
-        open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
-        footer={null}
-        width={760}
-      >
-        <List
-          itemLayout="horizontal"
-          dataSource={comments}
-          renderItem={(item) => (
-            <List.Item className="comment-list-item-modal">
-              <List.Item.Meta
-                avatar={<Avatar src={item.avatar} />}
-                description={
-                  <div className="comment-bubble">{item.content}</div>
-                }
-              />
-            </List.Item>
-          )}
-        />
-      </Modal>
     </div>
   );
 }
