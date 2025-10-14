@@ -1,0 +1,38 @@
+.login-container {
+  display: flex;
+  flex-direction: row;
+  min-height: 92vh;
+}
+
+.login-left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-image {
+  max-width: 600px;
+}
+
+.login-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-footer {
+  background: #1677ff;
+  color: white;
+  padding: 12px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.custom-label {
+  display: block;
+  font-size: 12px;
+  margin-top: 4px;
+  color: #888;
+}

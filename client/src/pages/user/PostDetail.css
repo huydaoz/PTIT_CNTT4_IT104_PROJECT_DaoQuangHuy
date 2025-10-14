@@ -1,0 +1,121 @@
+.post-detail {
+  max-width: 900px;
+  margin: 16px auto 60px;
+  padding: 0 12px;
+}
+
+/* back button */
+.post-back {
+  margin-bottom: 8px;
+}
+
+/* main post card */
+.post-card {
+  border-radius: 6px;
+  margin-bottom: 12px;
+  box-shadow: none;
+  padding: 12px;
+  background-color: #f7f8f9;
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.post-meta-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+/* title box with pale background center */
+.post-title-box {
+  padding: 12px 16px;
+  margin: 6px 0 12px;
+  text-align: center;
+}
+
+.post-title {
+  margin: 0 !important;
+  font-weight: 600 !important;
+  color: #263238;
+}
+
+.post-body {
+  padding: 8px 2px 12px;
+  color: #2b2b2b;
+}
+
+/* actions row */
+.post-actions {
+  color: #6b7280;
+  margin-bottom: 12px;
+}
+
+/* view all link */
+.view-all {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+  cursor: pointer;
+}
+
+/* inline comments */
+.comments-inline {
+  margin-bottom: 12px;
+}
+
+/* each comment item (both inline and modal) */
+.comment-list-item,
+.comment-list-item-modal {
+  /* border-left: 2px solid #eef3f6; */
+  padding-left: 16px;
+  margin-bottom: 12px;
+}
+
+/* bubble style for the comment content */
+.comment-bubble {
+  background: #f5f7fa;
+  padding: 12px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-top: 8px;
+  color: #1f2937;
+}
+
+/* small actions under comment */
+.comment-actions {
+  margin-top: 8px;
+  color: #9aa2ad;
+  font-size: 13px;
+}
+
+/* row showing name and date to be spaced */
+.comment-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* add comment box */
+.add-comment-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+/* responsive */
+@media (max-width: 768px) {
+  .post-detail {
+    padding: 0 8px;
+  }
+  .post-title-box {
+    padding: 10px;
+  }
+}

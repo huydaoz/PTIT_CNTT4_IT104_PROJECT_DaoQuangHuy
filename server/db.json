@@ -1,0 +1,212 @@
+{
+  "admin": [
+    {
+      "id": 1,
+      "name": "Đào Quang Huy",
+      "email": "admin@gmail.com",
+      "password": "123456",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "name": "Huy Đào",
+      "email": "admin1@gmail.com",
+      "password": "123456",
+      "role": "admin"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "firstname": "Đào Quang",
+      "lastname": "Huy",
+      "email": "huydao@gmail.com",
+      "password": "123456",
+      "status": "Hoạt động"
+    },
+    {
+      "id": 2,
+      "firstname": "Đào Huyền",
+      "lastname": "Trang",
+      "email": "daohuyentrang@gmail.com",
+      "password": "trang123",
+      "status": "Hoạt động"
+    },
+    {
+      "id": 3,
+      "firstname": "Phạm Thu",
+      "lastname": "Trang",
+      "email": "thutrang@gmail.com",
+      "password": "thutrang",
+      "status": "Hoạt động"
+    },
+    {
+      "id": 4,
+      "firstname": "Nguyễn Quang",
+      "lastname": "Anh",
+      "email": "quanganh@gmail.com",
+      "password": "anh123",
+      "status": "Hoạt động"
+    },
+    {
+      "id": 5,
+      "firstname": "Nguyễn Thành",
+      "lastname": "Doanh",
+      "email": "thanhdoanh@gmail.com",
+      "password": "doanh123",
+      "status": "Hoạt động"
+    },
+    {
+      "id": 6,
+      "firstname": "Nguyễn Quốc",
+      "lastname": "Hưng",
+      "email": "quochung@gmail.com",
+      "password": "hung123",
+      "status": "Hoạt động"
+    }
+  ],
+  "entries": [
+    {
+      "id": 1,
+      "name": "IT"
+    },
+    {
+      "id": 2,
+      "name": "Nấu ăn"
+    },
+    {
+      "id": 3,
+      "name": "Marketting"
+    },
+    {
+      "id": 4,
+      "name": "Xây dựng"
+    },
+    {
+      "name": "Develop",
+      "id": 5
+    }
+  ],
+  "articles": [
+    {
+      "title": "Lập trình C cơ bản cho người mới bắt đầu",
+      "entryId": 1,
+      "mood": "Bình thường",
+      "content": "Bài viết hướng dẫn cách khai báo biến, hàm và vòng lặp trong ngôn ngữ lập trình C, giúp người mới có thể bắt đầu dễ dàng.",
+      "status": "Public",
+      "image": "https://res.cloudinary.com/dtv22zbpt/image/upload/v1760335426/n3xy2sv8z0jnr5wel7ve.jpg",
+      "date": "2025-10-14",
+      "userId": 1,
+      "id": 1
+    },
+    {
+      "title": "Cách làm bánh mì bơ tỏi thơm ngon tại nhà",
+      "entryId": 2,
+      "mood": "Bình thường",
+      "content": "Hướng dẫn chi tiết cách làm bánh mì bơ tỏi giòn rụm, thơm lừng, cực dễ làm chỉ trong 20 phút.",
+      "status": "Public",
+      "image": "https://res.cloudinary.com/dtv22zbpt/image/upload/v1760335448/uh6j5s9mzrzdzvpck4yr.jpg",
+      "date": "2025-10-13",
+      "userId": 1,
+      "id": 2
+    },
+    {
+      "title": "Chiến lược Marketing 4.0 trong thời đại số",
+      "entryId": 3,
+      "mood": "Vui vẻ",
+      "content": "Tổng hợp các xu hướng marketing hiện đại, tập trung vào trải nghiệm khách hàng",
+      "status": "Public",
+      "image": "https://res.cloudinary.com/dtv22zbpt/image/upload/v1760335460/p6fuxvvvx2qnux2xeb2p.png",
+      "date": "2025-10-13",
+      "userId": 1,
+      "id": 3
+    },
+    {
+      "title": "Cấu trúc dữ liệu và giải thuật trong IT",
+      "entryId": 1,
+      "mood": "Vui vẻ",
+      "content": "Phân tích các cấu trúc dữ liệu phổ biến như danh sách liên kết, ngăn xếp, hàng đợi và ứng dụng thực tế.",
+      "status": "Public",
+      "image": "https://res.cloudinary.com/dtv22zbpt/image/upload/v1760335473/qguevj2vsvdhx8llpuck.jpg",
+      "date": "2025-10-13",
+      "userId": 2,
+      "id": 4
+    },
+    {
+      "title": "Thiết kế website responsive với React và Tailwinds",
+      "entryId": 5,
+      "mood": "Vui vẻ",
+      "content": "Giới thiệu cách sử dụng ReactJS kết hợp với TailwindCSS để tạo website hiển thị tốt trên mọi thiết bị.",
+      "status": "Public",
+      "image": "https://res.cloudinary.com/dtv22zbpt/image/upload/v1760335516/hj8k5nz3ofcywrizyqkt.png",
+      "date": "2025-10-13",
+      "userId": 2,
+      "id": 5
+    },
+    {
+      "title": "Kỹ năng quản lý công trình xây dựng hiệu quả",
+      "entryId": 4,
+      "mood": "Vui vẻ",
+      "content": "Những kỹ năng cần thiết để lập kế hoạch, phân bổ nguồn lực và giám sát tiến độ thi công trong các dự án xây dựng.",
+      "status": "Public",
+      "image": "https://res.cloudinary.com/dtv22zbpt/image/upload/v1760335635/e5ltahgwpmp3cyxtejze.jpg",
+      "date": "2025-10-13",
+      "userId": 2,
+      "id": 6
+    },
+    {
+      "title": "Phân tích hành vi người tiêu dùng trong Marketings",
+      "entryId": 3,
+      "mood": "Vui vẻ",
+      "content": "Cách hiểu rõ hơn về hành vi khách hàng để tối ưu chiến lược quảng cáo và nâng cao tỷ lệ chuyển đổi.",
+      "status": "Public",
+      "image": "https://res.cloudinary.com/dtv22zbpt/image/upload/v1760335762/ps4lsrsbi8xyxfnapjmv.jpg",
+      "date": "2025-10-13",
+      "userId": 3,
+      "id": 7
+    },
+    {
+      "title": "Cách nấu phở bò chuẩn vị Hà Nội",
+      "entryId": 2,
+      "mood": "Vui vẻ",
+      "content": "Chia sẻ công thức nấu phở bò truyền thống với nước dùng ngọt thanh, thịt mềm và bánh phở dai ngon.",
+      "status": "Public",
+      "image": "https://res.cloudinary.com/dtv22zbpt/image/upload/v1760337033/koixzw0ymqems3ue1xnd.jpg",
+      "date": "2025-10-13",
+      "userId": 4,
+      "id": 8
+    },
+    {
+      "title": "Xây dựng API RESTful bằng Node.js và Expres",
+      "entryId": 5,
+      "mood": "Vui vẻ",
+      "content": "Hướng dẫn tạo API cơ bản với Node.js, Express và JSON Server cho các ứng dụng web hiện đại.",
+      "status": "Public",
+      "image": "https://res.cloudinary.com/dtv22zbpt/image/upload/v1760337110/a4c9fqibugp65jnjfgo0.jpg",
+      "date": "2025-10-13",
+      "userId": 5,
+      "id": 9
+    },
+    {
+      "title": "Ứng dụng AI trong ngành xây dựng hiện đại",
+      "entryId": 4,
+      "mood": "Vui vẻ",
+      "content": "Tổng quan về cách trí tuệ nhân tạo được ứng dụng trong thiết kế, giám sát và quản lý công trình xây dựng.",
+      "status": "Public",
+      "image": "https://res.cloudinary.com/dtv22zbpt/image/upload/v1760337154/mgo7hcqdkdvyh1nxj4yv.jpg",
+      "date": "2025-10-13",
+      "userId": 6,
+      "id": 10
+    },
+    {
+      "title": "1",
+      "entryId": 2,
+      "mood": "Vui vẻ",
+      "content": "1",
+      "status": "Public",
+      "date": "2025-10-14",
+      "userId": 1,
+      "id": 11
+    }
+  ]
+}

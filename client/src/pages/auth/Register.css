@@ -1,0 +1,16 @@
+.register-container {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  height: 100vh;
+}
+
+.register-left {
+  margin-left: 50px;
+}
+
+/* .register-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
